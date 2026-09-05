@@ -4,10 +4,61 @@ const response = document.querySelector(".lanyard-response");
 const titleLines = [...document.querySelectorAll(".title-line")];
 const copyBlocks = [...document.querySelectorAll(".reveal-copy")];
 const magneticButton = document.querySelector(".magnetic");
+const lanyardImage = document.querySelector(".lanyard-response img");
 const layoutQuery = window.matchMedia("(max-width: 760px)");
 const mobileLayout = layoutQuery.matches;
+let entranceAnimation = null;
 
 layoutQuery.addEventListener("change", () => window.location.reload());
+
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) window.location.reload();
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (!entranceAnimation || entranceAnimation.playState === "finished") return;
+  if (document.hidden) entranceAnimation.pause();
+  else entranceAnimation.play();
+});
+
+function waitUntilVisible() {
+  if (!document.hidden) return Promise.resolve();
+
+  return new Promise((resolve) => {
+    const onVisibilityChange = () => {
+      if (document.hidden) return;
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      resolve();
+    };
+
+    document.addEventListener("visibilitychange", onVisibilityChange);
+  });
+}
+
+async function waitForLanyard() {
+  if (!lanyardImage) return;
+
+  if (!lanyardImage.complete) {
+    await new Promise((resolve) => {
+      lanyardImage.addEventListener("load", resolve, { once: true });
+      lanyardImage.addEventListener("error", resolve, { once: true });
+    });
+  }
+
+  if (typeof lanyardImage.decode === "function") {
+    try {
+      await lanyardImage.decode();
+    } catch {
+      // The load event is enough when a browser cannot decode explicitly.
+    }
+  }
+}
+
+function waitForFirstPaint() {
+  return new Promise((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(resolve));
+  });
+}
 
 function revealText() {
   titleLines.forEach((line, index) => {
@@ -92,6 +143,7 @@ function animateLanyard() {
         easing: "linear",
       },
     );
+    entranceAnimation = mobileEntrance;
 
     mobileEntrance.finished.then(() => {
       const holdSwing = rig.animate(
@@ -185,6 +237,7 @@ function animateLanyard() {
       easing: "linear",
     },
   );
+  entranceAnimation = entrance;
 
   entrance.finished.then(() => {
     rig.animate(
@@ -236,6 +289,22 @@ function installMagneticButton() {
   });
 }
 
+async function startHero() {
+  await Promise.all([
+    waitForLanyard(),
+    document.fonts?.ready ?? Promise.resolve(),
+  ]);
+  await waitUntilVisible();
+  await waitForFirstPaint();
+
+  revealText();
+  animateLanyard();
+  if (!mobileLayout) {
+    installPointerPhysics();
+    installMagneticButton();
+  }
+}
+
 if (reduceMotion) {
   rig.style.opacity = "1";
   rig.style.transform = "none";
@@ -243,10 +312,5 @@ if (reduceMotion) {
   titleLines.forEach((line) => (line.style.opacity = "1"));
   copyBlocks.forEach((block) => (block.style.opacity = "1"));
 } else {
-  revealText();
-  animateLanyard();
-  if (!mobileLayout) {
-    installPointerPhysics();
-    installMagneticButton();
-  }
+  startHero();
 }
