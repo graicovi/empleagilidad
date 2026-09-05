@@ -23,8 +23,8 @@ function revealText() {
   });
 
   const copyDelays = mobileLayout
-    ? [1760, 2420, 2640, 2840]
-    : [480, 1180, 1420, 1640];
+    ? [1760, 2680, 2900, 3100]
+    : [480, 1500, 1700, 1880];
 
   copyBlocks.forEach((block, index) => {
     block.animate(

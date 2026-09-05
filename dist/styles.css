@@ -128,7 +128,7 @@ a {
   display: flex;
   width: min(70vw, 1120px);
   min-height: 100svh;
-  padding: clamp(8rem, 15vh, 11.5rem) 0 clamp(3rem, 8vh, 6rem) var(--content-gutter);
+  padding: clamp(7rem, 12vh, 9rem) 0 clamp(2.5rem, 5vh, 4rem) var(--content-gutter);
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
@@ -158,9 +158,9 @@ h1 {
   width: min(100%, 78rem);
   max-width: 78rem;
   margin: 0;
-  font-size: clamp(3.6rem, 7.2vw, 8.8rem);
+  font-size: clamp(4rem, min(5.2vw, 9.5vh), 6.5rem);
   font-weight: 740;
-  line-height: 0.85;
+  line-height: 0.88;
   letter-spacing: -0.078em;
   text-wrap: balance;
 }
@@ -175,6 +175,10 @@ h1 {
 .title-line--two {
   margin-top: 0.12em;
   padding-right: 0.08em;
+}
+
+.title-line--three {
+  margin-top: 0.035em;
 }
 
 h1 em {
