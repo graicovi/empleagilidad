@@ -27,7 +27,7 @@ function revealText() {
 
   const copyDelays = mobileLayout
     ? [3740, 4620, 4840, 5040]
-    : [480, 1500, 1700, 1880];
+    : [480, 1180, 1420, 1640];
 
   copyBlocks.forEach((block, index) => {
     block.animate(
