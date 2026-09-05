@@ -14,12 +14,14 @@ function revealText() {
       ],
       {
         duration: 920,
-        delay: 360 + index * 145,
+        delay: 720 + index * 240,
         fill: "forwards",
         easing: "cubic-bezier(0.16, 1, 0.3, 1)",
       },
     );
   });
+
+  const copyDelays = [480, 1180, 1420, 1640];
 
   copyBlocks.forEach((block, index) => {
     block.animate(
@@ -29,7 +31,7 @@ function revealText() {
       ],
       {
         duration: 760,
-        delay: 180 + index * 180,
+        delay: copyDelays[index] ?? 1640 + index * 180,
         fill: "forwards",
         easing: "cubic-bezier(0.16, 1, 0.3, 1)",
       },
@@ -38,19 +40,56 @@ function revealText() {
 }
 
 function animateLanyard() {
+  response.classList.add("glint-active");
+
   const entrance = rig.animate(
     [
-      { opacity: 0, transform: "translateY(-68vh) rotate(-7deg) scale(0.96)" },
-      { opacity: 1, offset: 0.18 },
-      { opacity: 1, transform: "translateY(4.5vh) rotate(5deg) scale(1)", offset: 0.58 },
-      { opacity: 1, transform: "translateY(-1.2vh) rotate(-2.4deg) scale(1)", offset: 0.76 },
-      { opacity: 1, transform: "translateY(0.4vh) rotate(1.1deg) scale(1)", offset: 0.9 },
-      { opacity: 1, transform: "translateY(0) rotate(0deg) scale(1)" },
+      {
+        opacity: 0.38,
+        filter: "blur(10px) saturate(0.72)",
+        transform: "translate3d(15vw, -9vh, 0) rotate(-5deg) scale(1.58)",
+        offset: 0,
+        easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+      },
+      {
+        opacity: 1,
+        filter: "blur(0) saturate(1)",
+        transform: "translate3d(0, 0, 0) rotate(6.4deg) scale(1)",
+        offset: 0.48,
+        easing: "cubic-bezier(0.45, 0, 0.55, 1)",
+      },
+      {
+        opacity: 1,
+        filter: "blur(0) saturate(1)",
+        transform: "translate3d(0, 0, 0) rotate(-3.1deg) scale(1)",
+        offset: 0.67,
+        easing: "ease-in-out",
+      },
+      {
+        opacity: 1,
+        filter: "blur(0) saturate(1)",
+        transform: "translate3d(0, 0, 0) rotate(1.45deg) scale(1)",
+        offset: 0.82,
+        easing: "ease-in-out",
+      },
+      {
+        opacity: 1,
+        filter: "blur(0) saturate(1)",
+        transform: "translate3d(0, 0, 0) rotate(-0.58deg) scale(1)",
+        offset: 0.93,
+        easing: "ease-in-out",
+      },
+      {
+        opacity: 1,
+        filter: "blur(0) saturate(1)",
+        transform: "translate3d(0, 0, 0) rotate(0deg) scale(1)",
+        offset: 1,
+      },
     ],
     {
-      duration: 2100,
+      duration: 2550,
       fill: "forwards",
-      easing: "cubic-bezier(0.22, 0.72, 0.2, 1)",
+      easing: "linear",
     },
   );
 
@@ -107,6 +146,7 @@ function installMagneticButton() {
 if (reduceMotion) {
   rig.style.opacity = "1";
   rig.style.transform = "none";
+  rig.style.filter = "none";
   titleLines.forEach((line) => (line.style.opacity = "1"));
   copyBlocks.forEach((block) => (block.style.opacity = "1"));
 } else {
