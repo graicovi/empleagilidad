@@ -4,7 +4,10 @@ const response = document.querySelector(".lanyard-response");
 const titleLines = [...document.querySelectorAll(".title-line")];
 const copyBlocks = [...document.querySelectorAll(".reveal-copy")];
 const magneticButton = document.querySelector(".magnetic");
-const mobileLayout = window.matchMedia("(max-width: 760px)").matches;
+const layoutQuery = window.matchMedia("(max-width: 760px)");
+const mobileLayout = layoutQuery.matches;
+
+layoutQuery.addEventListener("change", () => window.location.reload());
 
 function revealText() {
   titleLines.forEach((line, index) => {
