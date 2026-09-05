@@ -7,7 +7,6 @@ const magneticButton = document.querySelector(".magnetic");
 const lanyardImage = document.querySelector(".lanyard-response img");
 const layoutQuery = window.matchMedia("(max-width: 760px)");
 const mobileLayout = layoutQuery.matches;
-const alternateMotion = new URLSearchParams(window.location.search).get("motion") === "alternate";
 let entranceAnimation = null;
 
 layoutQuery.addEventListener("change", () => window.location.reload());
@@ -188,7 +187,8 @@ function animateLanyard() {
     return;
   }
 
-  const standardEntranceFrames = [
+  const entrance = rig.animate(
+    [
       {
         opacity: 0.38,
         filter: "blur(10px) saturate(0.72)",
@@ -230,70 +230,9 @@ function animateLanyard() {
         transform: "translate3d(0, 0, 0) rotate(0deg) scale(1)",
         offset: 1,
       },
-    ];
-
-  const alternateEntranceFrames = [
+    ],
     {
-      opacity: 0.42,
-      filter: "blur(8px) saturate(0.76)",
-      transform: "translate3d(13vw, -8vh, 0) rotate(-4deg) scale(1.52)",
-      offset: 0,
-      easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-    },
-    {
-      opacity: 0.62,
-      filter: "blur(5px) saturate(0.84)",
-      transform: "translate3d(10vw, -6vh, 0) rotate(-1.8deg) scale(1.38)",
-      offset: 0.12,
-      easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-    },
-    {
-      opacity: 0.94,
-      filter: "blur(1px) saturate(0.97)",
-      transform: "translate3d(2vw, -1vh, 0) rotate(3.4deg) scale(1.08)",
-      offset: 0.42,
-      easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-    },
-    {
-      opacity: 1,
-      filter: "blur(0) saturate(1)",
-      transform: "translate3d(0, 0, 0) rotate(4.8deg) scale(1)",
-      offset: 0.54,
-      easing: "ease-in-out",
-    },
-    {
-      opacity: 1,
-      filter: "blur(0) saturate(1)",
-      transform: "translate3d(0, 0, 0) rotate(-2.2deg) scale(1)",
-      offset: 0.69,
-      easing: "ease-in-out",
-    },
-    {
-      opacity: 1,
-      filter: "blur(0) saturate(1)",
-      transform: "translate3d(0, 0, 0) rotate(0.9deg) scale(1)",
-      offset: 0.84,
-      easing: "ease-in-out",
-    },
-    {
-      opacity: 1,
-      filter: "blur(0) saturate(1)",
-      transform: "translate3d(0, 0, 0) rotate(-0.32deg) scale(1)",
-      offset: 0.94,
-      easing: "ease-in-out",
-    },
-    {
-      opacity: 1,
-      filter: "blur(0) saturate(1)",
-      transform: "translate3d(0, 0, 0) rotate(0deg) scale(1)",
-      offset: 1,
-    },
-  ];
-
-  const entrance = rig.animate(
-    alternateMotion ? alternateEntranceFrames : standardEntranceFrames,
-    {
-      duration: alternateMotion ? 2850 : 2550,
+      duration: 2550,
       fill: "forwards",
       easing: "linear",
     },
@@ -357,14 +296,6 @@ async function startHero() {
   ]);
   await waitUntilVisible();
   await waitForFirstPaint();
-
-  if (alternateMotion && !mobileLayout) {
-    rig.style.opacity = "0.42";
-    rig.style.filter = "blur(8px) saturate(0.76)";
-    rig.style.transform = "translate3d(13vw, -8vh, 0) rotate(-4deg) scale(1.52)";
-    await waitForFirstPaint();
-    await new Promise((resolve) => window.setTimeout(resolve, 180));
-  }
 
   revealText();
   animateLanyard();
