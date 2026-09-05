@@ -506,18 +506,18 @@ h1 em::after {
   }
 
   .lanyard-stage {
-    top: -12vh;
+    top: -30vh;
     right: 50%;
     bottom: auto;
     z-index: 4;
-    width: min(80vw, 360px);
+    width: min(145vw, 580px);
     opacity: 1;
     transform: translateX(50%);
   }
 
   .lanyard-rig {
     filter: blur(8px) saturate(0.78);
-    transform: translateY(-13vh) rotate(-4deg) scale(1.14);
+    transform: translateY(-8vh) rotate(-3deg) scale(1.06);
   }
 
   h1 em::after {
@@ -540,8 +540,8 @@ h1 em::after {
   }
 
   .lanyard-stage {
-    top: -15vh;
-    width: min(72vw, 330px);
+    top: -33vh;
+    width: min(140vw, 540px);
   }
 }
 
@@ -567,8 +567,8 @@ h1 em::after {
 
 @media (prefers-reduced-motion: reduce) and (max-width: 760px) {
   .lanyard-rig {
-    opacity: 0.14;
-    filter: blur(16px);
-    transform: translateY(-2vh) scale(1.03);
+    opacity: 0.1;
+    filter: blur(18px);
+    transform: translateY(-1vh) scale(1.02);
   }
 }

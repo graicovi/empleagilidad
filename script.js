@@ -51,14 +51,14 @@ function animateLanyard() {
         {
           opacity: 0,
           filter: "blur(8px) saturate(0.78)",
-          transform: "translateY(-13vh) rotate(-4deg) scale(1.14)",
+          transform: "translateY(-8vh) rotate(-3deg) scale(1.06)",
           offset: 0,
           easing: "cubic-bezier(0.16, 1, 0.3, 1)",
         },
         {
           opacity: 1,
           filter: "blur(0) saturate(1)",
-          transform: "translateY(1.7vh) rotate(3.8deg) scale(1)",
+          transform: "translateY(1vh) rotate(3.2deg) scale(1)",
           offset: 0.56,
           easing: "ease-in-out",
         },
@@ -100,9 +100,9 @@ function animateLanyard() {
               transform: "translateY(0) rotate(0deg) scale(1)",
             },
             {
-              opacity: 0.14,
-              filter: "blur(16px) saturate(0.78)",
-              transform: "translateY(-2vh) rotate(0deg) scale(1.03)",
+              opacity: 0.1,
+              filter: "blur(18px) saturate(0.78)",
+              transform: "translateY(-1vh) rotate(0deg) scale(1.02)",
             },
           ],
           {
