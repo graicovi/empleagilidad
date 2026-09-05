@@ -15,7 +15,7 @@ function revealText() {
       ],
       {
         duration: 920,
-        delay: mobileLayout ? 1950 + index * 230 : 720 + index * 240,
+        delay: mobileLayout ? 3920 + index * 230 : 720 + index * 240,
         fill: "forwards",
         easing: "cubic-bezier(0.16, 1, 0.3, 1)",
       },
@@ -23,7 +23,7 @@ function revealText() {
   });
 
   const copyDelays = mobileLayout
-    ? [1760, 2680, 2900, 3100]
+    ? [3740, 4620, 4840, 5040]
     : [480, 1500, 1700, 1880];
 
   copyBlocks.forEach((block, index) => {
@@ -91,7 +91,22 @@ function animateLanyard() {
     );
 
     mobileEntrance.finished.then(() => {
-      window.setTimeout(() => {
+      const holdSwing = rig.animate(
+        [
+          { transform: "translateY(0) rotate(0deg) scale(1)" },
+          { transform: "translateY(0) rotate(1.15deg) scale(1)", offset: 0.25 },
+          { transform: "translateY(0) rotate(0deg) scale(1)", offset: 0.5 },
+          { transform: "translateY(0) rotate(-0.9deg) scale(1)", offset: 0.75 },
+          { transform: "translateY(0) rotate(0deg) scale(1)" },
+        ],
+        {
+          duration: 2200,
+          fill: "forwards",
+          easing: "ease-in-out",
+        },
+      );
+
+      holdSwing.finished.then(() => {
         rig.animate(
           [
             {
@@ -111,7 +126,7 @@ function animateLanyard() {
             easing: "cubic-bezier(0.4, 0, 0.2, 1)",
           },
         );
-      }, 360);
+      });
     });
 
     return;

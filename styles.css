@@ -506,7 +506,7 @@ h1 em::after {
   }
 
   .lanyard-stage {
-    top: -30vh;
+    top: -12vh;
     right: 50%;
     bottom: auto;
     z-index: 4;
@@ -521,7 +521,7 @@ h1 em::after {
   }
 
   h1 em::after {
-    animation-delay: 2.05s;
+    animation-delay: 4.25s;
   }
 }
 
@@ -540,7 +540,7 @@ h1 em::after {
   }
 
   .lanyard-stage {
-    top: -33vh;
+    top: -14vh;
     width: min(140vw, 540px);
   }
 }
