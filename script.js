@@ -4,6 +4,7 @@ const response = document.querySelector(".lanyard-response");
 const titleLines = [...document.querySelectorAll(".title-line")];
 const copyBlocks = [...document.querySelectorAll(".reveal-copy")];
 const magneticButton = document.querySelector(".magnetic");
+const mobileLayout = window.matchMedia("(max-width: 760px)").matches;
 
 function revealText() {
   titleLines.forEach((line, index) => {
@@ -14,14 +15,16 @@ function revealText() {
       ],
       {
         duration: 920,
-        delay: 720 + index * 240,
+        delay: mobileLayout ? 1950 + index * 230 : 720 + index * 240,
         fill: "forwards",
         easing: "cubic-bezier(0.16, 1, 0.3, 1)",
       },
     );
   });
 
-  const copyDelays = [480, 1180, 1420, 1640];
+  const copyDelays = mobileLayout
+    ? [1760, 2420, 2640, 2840]
+    : [480, 1180, 1420, 1640];
 
   copyBlocks.forEach((block, index) => {
     block.animate(
@@ -41,6 +44,78 @@ function revealText() {
 
 function animateLanyard() {
   response.classList.add("glint-active");
+
+  if (mobileLayout) {
+    const mobileEntrance = rig.animate(
+      [
+        {
+          opacity: 0,
+          filter: "blur(8px) saturate(0.78)",
+          transform: "translateY(-13vh) rotate(-4deg) scale(1.14)",
+          offset: 0,
+          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+        },
+        {
+          opacity: 1,
+          filter: "blur(0) saturate(1)",
+          transform: "translateY(1.7vh) rotate(3.8deg) scale(1)",
+          offset: 0.56,
+          easing: "ease-in-out",
+        },
+        {
+          opacity: 1,
+          filter: "blur(0) saturate(1)",
+          transform: "translateY(0) rotate(-1.7deg) scale(1)",
+          offset: 0.76,
+          easing: "ease-in-out",
+        },
+        {
+          opacity: 1,
+          filter: "blur(0) saturate(1)",
+          transform: "translateY(0) rotate(0.65deg) scale(1)",
+          offset: 0.9,
+          easing: "ease-in-out",
+        },
+        {
+          opacity: 1,
+          filter: "blur(0) saturate(1)",
+          transform: "translateY(0) rotate(0deg) scale(1)",
+          offset: 1,
+        },
+      ],
+      {
+        duration: 1450,
+        fill: "forwards",
+        easing: "linear",
+      },
+    );
+
+    mobileEntrance.finished.then(() => {
+      window.setTimeout(() => {
+        rig.animate(
+          [
+            {
+              opacity: 1,
+              filter: "blur(0) saturate(1)",
+              transform: "translateY(0) rotate(0deg) scale(1)",
+            },
+            {
+              opacity: 0.14,
+              filter: "blur(16px) saturate(0.78)",
+              transform: "translateY(-2vh) rotate(0deg) scale(1.03)",
+            },
+          ],
+          {
+            duration: 720,
+            fill: "forwards",
+            easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+          },
+        );
+      }, 360);
+    });
+
+    return;
+  }
 
   const entrance = rig.animate(
     [
@@ -152,6 +227,8 @@ if (reduceMotion) {
 } else {
   revealText();
   animateLanyard();
-  installPointerPhysics();
-  installMagneticButton();
+  if (!mobileLayout) {
+    installPointerPhysics();
+    installMagneticButton();
+  }
 }

@@ -7,6 +7,8 @@
   --accent: #c57a21;
   --logo-dot: #b88a55;
   --line: rgba(21, 21, 21, 0.14);
+  --canvas-edge: max(0px, calc((100vw - 1440px) / 2));
+  --content-gutter: calc(var(--canvas-edge) + clamp(1.4rem, 5vw, 4.5rem));
   font-family: "Geist", "Helvetica Neue", Arial, sans-serif;
   font-synthesis: none;
 }
@@ -79,7 +81,7 @@ a {
 .brand {
   position: absolute;
   top: clamp(1.5rem, 4vw, 3.2rem);
-  left: clamp(1.4rem, 5vw, 5.5rem);
+  left: var(--content-gutter);
   z-index: 8;
   display: inline-flex;
   align-items: baseline;
@@ -126,7 +128,7 @@ a {
   display: flex;
   width: min(70vw, 1120px);
   min-height: 100svh;
-  padding: clamp(8rem, 15vh, 11.5rem) 0 clamp(3rem, 8vh, 6rem) clamp(1.4rem, 5vw, 5.5rem);
+  padding: clamp(8rem, 15vh, 11.5rem) 0 clamp(3rem, 8vh, 6rem) var(--content-gutter);
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
@@ -320,7 +322,7 @@ h1 em::after {
 .lanyard-stage {
   position: absolute;
   top: -8vh;
-  right: clamp(-9rem, -6vw, -2rem);
+  right: var(--canvas-edge);
   bottom: -10vh;
   z-index: 3;
   display: grid;
@@ -378,7 +380,7 @@ h1 em::after {
 
 .edition-mark {
   position: absolute;
-  right: clamp(1.4rem, 3vw, 3rem);
+  right: calc(var(--canvas-edge) + clamp(1.4rem, 3vw, 3rem));
   top: clamp(1.5rem, 4vw, 3.2rem);
   z-index: 7;
   display: flex;
@@ -459,8 +461,8 @@ h1 em::after {
   .hero-copy {
     width: 100%;
     min-height: 100svh;
-    padding: 7.2rem 1.4rem 2.2rem;
-    justify-content: flex-start;
+    padding: 5.8rem 1.4rem 2.4rem;
+    justify-content: center;
   }
 
   .eyebrow {
@@ -500,12 +502,22 @@ h1 em::after {
   }
 
   .lanyard-stage {
-    top: auto;
-    right: -9vw;
-    bottom: -40vh;
-    width: min(76vw, 540px);
-    opacity: 0.66;
-    transform: rotate(-8deg);
+    top: -12vh;
+    right: 50%;
+    bottom: auto;
+    z-index: 4;
+    width: min(80vw, 360px);
+    opacity: 1;
+    transform: translateX(50%);
+  }
+
+  .lanyard-rig {
+    filter: blur(8px) saturate(0.78);
+    transform: translateY(-13vh) rotate(-4deg) scale(1.14);
+  }
+
+  h1 em::after {
+    animation-delay: 2.05s;
   }
 }
 
@@ -524,7 +536,8 @@ h1 em::after {
   }
 
   .lanyard-stage {
-    bottom: -54vh;
+    top: -15vh;
+    width: min(72vw, 330px);
   }
 }
 
@@ -545,5 +558,13 @@ h1 em::after {
     opacity: 1;
     filter: none;
     transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (max-width: 760px) {
+  .lanyard-rig {
+    opacity: 0.14;
+    filter: blur(16px);
+    transform: translateY(-2vh) scale(1.03);
   }
 }
