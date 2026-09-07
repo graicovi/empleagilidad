@@ -289,6 +289,122 @@ function installMagneticButton() {
   });
 }
 
+function installPageMotion() {
+  if (!window.gsap || !window.ScrollTrigger) return;
+
+  const { gsap, ScrollTrigger } = window;
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.utils.toArray(".section-reveal").forEach((section) => {
+    const introTargets = section.querySelectorAll(
+      ".section-marker, .section-kicker, .section-heading h2, .author-copy h2, .section-lead, .author-copy > p",
+    );
+    const detailTargets = section.querySelectorAll(
+      ".signal-card, .editorial-statement, .system-track span, .system-result, .outcome-grid article, .first-move, .author-monogram, .author-signature, .promise-card, .faq-list details, .launch-panel",
+    );
+
+    gsap.set(introTargets, { opacity: 0, y: 34 });
+    gsap.set(detailTargets, { opacity: 0, y: 28 });
+
+    const sectionTimeline = gsap.timeline({
+      defaults: { ease: "power3.out" },
+      scrollTrigger: {
+        trigger: section,
+        start: "top 78%",
+        once: true,
+      },
+    });
+
+    sectionTimeline
+      .to(introTargets, {
+        opacity: 1,
+        y: 0,
+        duration: 0.82,
+        stagger: 0.09,
+      })
+      .to(
+        detailTargets,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.72,
+          stagger: 0.105,
+        },
+        "-=0.44",
+      );
+  });
+
+  const outcomeCards = gsap.utils.toArray(".outcome-grid article");
+
+  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    outcomeCards.forEach((card, index) => {
+      const number = card.querySelector(":scope > span");
+      const heading = card.querySelector("h3");
+      const copy = card.querySelector("p");
+      const tilt = index % 2 === 0 ? -1.25 : 1.25;
+
+      card.addEventListener("pointerenter", () => {
+        gsap.to(card, {
+          y: -12,
+          rotationY: tilt,
+          transformPerspective: 1000,
+          duration: 0.6,
+          ease: "power3.out",
+          overwrite: "auto",
+        });
+        gsap.to(number, { x: 5, duration: 0.48, ease: "power3.out" });
+        gsap.to(heading, { x: 8, color: "#c57a21", duration: 0.5, ease: "power3.out" });
+        gsap.to(copy, { y: -4, duration: 0.58, ease: "power3.out" });
+      });
+
+      card.addEventListener("pointerleave", () => {
+        gsap.to(card, {
+          y: 0,
+          rotationY: 0,
+          duration: 0.75,
+          ease: "elastic.out(1, 0.55)",
+          overwrite: "auto",
+        });
+        gsap.to([number, copy], {
+          x: 0,
+          y: 0,
+          duration: 0.55,
+          ease: "power3.out",
+        });
+        gsap.to(heading, {
+          x: 0,
+          color: "#151515",
+          duration: 0.55,
+          ease: "power3.out",
+        });
+      });
+    });
+  }
+
+  document.querySelectorAll(".faq-list details").forEach((item) => {
+    const answer = item.querySelector("p");
+    if (!answer) return;
+
+    item.addEventListener("toggle", () => {
+      if (!item.open) return;
+
+      gsap.fromTo(
+        answer,
+        { autoAlpha: 0, y: -10, clipPath: "inset(0 0 100% 0)" },
+        {
+          autoAlpha: 1,
+          y: 0,
+          clipPath: "inset(0 0 0% 0)",
+          duration: 0.52,
+          ease: "power3.out",
+        },
+      );
+    });
+  });
+
+  document.fonts?.ready.then(() => ScrollTrigger.refresh());
+}
+
 async function startHero() {
   await Promise.all([
     waitForLanyard(),
@@ -313,4 +429,5 @@ if (reduceMotion) {
   copyBlocks.forEach((block) => (block.style.opacity = "1"));
 } else {
   startHero();
+  installPageMotion();
 }
