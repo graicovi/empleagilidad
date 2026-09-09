@@ -300,7 +300,7 @@ function installPageMotion() {
       ".section-marker, .section-kicker, .section-heading h2, .author-copy h2, .section-lead, .author-copy > p",
     );
     const detailTargets = section.querySelectorAll(
-      ".signal-card, .editorial-statement, .system-track span, .system-result, .outcome-grid article, .first-move, .author-monogram, .author-signature, .promise-card, .faq-list details, .launch-panel",
+      ".signal-card, .editorial-statement, .method-loop span, .system-result, .outcome-grid article, .author-monogram, .author-signature, .faq-list details, .launch-panel",
     );
 
     gsap.set(introTargets, { opacity: 0, y: 34 });

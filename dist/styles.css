@@ -307,6 +307,61 @@ h1 em::after {
   font-weight: 560;
 }
 
+.jobbox-link-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.jobbox-link-wrap > a {
+  font-weight: 730;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+.jobbox-tooltip {
+  position: absolute;
+  bottom: calc(100% + 0.75rem);
+  left: 50%;
+  z-index: 12;
+  width: max-content;
+  max-width: 16rem;
+  padding: 0.72rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--ink);
+  color: #fff;
+  box-shadow: 0 0.8rem 2rem rgba(21, 21, 21, 0.18);
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 0.45rem);
+  transition:
+    opacity 240ms ease,
+    visibility 240ms ease,
+    transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.jobbox-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  border: 0.38rem solid transparent;
+  border-top-color: var(--ink);
+  transform: translateX(-50%);
+}
+
+.jobbox-link-wrap:hover .jobbox-tooltip,
+.jobbox-link-wrap:focus-within .jobbox-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
 .pulse-dot {
   position: relative;
   width: 0.5rem;
@@ -687,7 +742,6 @@ h1 em::after {
 .problem-layout,
 .system-intro,
 .action-intro,
-.promise-intro,
 .faq-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.04fr) minmax(22rem, 0.96fr);
@@ -750,65 +804,87 @@ h1 em::after {
   letter-spacing: -0.052em;
 }
 
-.system-section,
-.promise-section {
+.system-section {
   color: #fff;
   background:
     radial-gradient(circle at 15% 100%, rgba(197, 122, 33, 0.2), transparent 32%),
     #181817;
 }
 
-.system-section::before,
-.promise-section::before {
+.system-section::before {
   opacity: 0.12;
   mix-blend-mode: screen;
 }
 
-.system-section .section-lead,
-.promise-section .section-lead {
+.system-section .section-lead {
   color: rgba(255, 255, 255, 0.63);
 }
 
-.system-track {
+.method-loop {
   position: relative;
   display: grid;
   margin-top: clamp(4.5rem, 9vw, 8rem);
-  grid-template-columns: repeat(8, 1fr);
-  align-items: center;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.system-track::before {
-  content: "";
-  position: absolute;
-  right: 5%;
-  left: 5%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent) 12% 88%, transparent);
-}
-
-.system-track span {
+.method-loop span {
   position: relative;
-  display: grid;
-  width: clamp(2.8rem, 5vw, 4.9rem);
-  aspect-ratio: 1;
-  place-self: center;
-  place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.26);
-  border-radius: 50%;
-  background: #181817;
-  box-shadow: 0 0 0 0.65rem #181817;
-  transition: border-color 300ms, color 300ms, transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  min-height: clamp(10rem, 16vw, 14rem);
+  padding: clamp(1.4rem, 2.5vw, 2.25rem);
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+  transition:
+    background-color 450ms ease,
+    color 350ms ease,
+    transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.system-track span:hover {
-  border-color: var(--accent);
+.method-loop span:last-child {
+  border-right: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.method-loop span::after {
+  content: "→";
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
   color: var(--accent);
-  transform: scale(1.12);
+  font-size: 1.1rem;
 }
 
-.system-track b {
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
+.method-loop span:last-child::after {
+  content: "↺";
+}
+
+.method-loop span:hover {
+  z-index: 1;
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-0.55rem);
+}
+
+.method-loop span:hover::after {
+  color: #fff;
+}
+
+.method-loop b {
+  font-size: clamp(1.15rem, 1.8vw, 1.55rem);
+  letter-spacing: -0.035em;
+}
+
+.method-loop small {
+  color: rgba(255, 255, 255, 0.54);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.method-loop span:hover small {
+  color: rgba(255, 255, 255, 0.78);
 }
 
 .system-result {
@@ -928,49 +1004,6 @@ h1 em::after {
   line-height: 1.55;
 }
 
-.first-move {
-  position: relative;
-  display: grid;
-  margin-top: clamp(4rem, 8vw, 8rem);
-  padding: clamp(2rem, 5vw, 4.5rem);
-  grid-template-columns: minmax(9rem, 0.35fr) 1.65fr;
-  gap: clamp(2rem, 5vw, 5rem);
-  overflow: hidden;
-  background: var(--accent);
-  color: #fff;
-}
-
-.first-move::after {
-  content: "?";
-  position: absolute;
-  right: -0.04em;
-  bottom: -0.26em;
-  opacity: 0.11;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(14rem, 29vw, 28rem);
-  line-height: 1;
-}
-
-.first-move-label {
-  position: relative;
-  z-index: 1;
-  font-size: 0.72rem;
-  font-weight: 750;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-}
-
-.first-move p {
-  position: relative;
-  z-index: 1;
-  max-width: 56rem;
-  margin: 0;
-  font-size: clamp(2rem, 4.4vw, 4.8rem);
-  font-weight: 690;
-  line-height: 0.98;
-  letter-spacing: -0.06em;
-}
-
 .author-section {
   background: var(--paper-bright);
 }
@@ -1047,64 +1080,6 @@ h1 em::after {
 .author-signature span {
   color: var(--muted);
   font-size: 0.82rem;
-}
-
-.promise-columns {
-  display: grid;
-  margin-top: clamp(4rem, 8vw, 7rem);
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-.promise-card {
-  min-height: 24rem;
-  padding: clamp(2rem, 4vw, 4rem);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.promise-card--yes {
-  background: var(--accent);
-  border-color: var(--accent);
-}
-
-.promise-card h3 {
-  margin: 0 0 clamp(3rem, 6vw, 6rem);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2rem, 3vw, 3.2rem);
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.045em;
-}
-
-.promise-card ul {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  gap: 0;
-  list-style: none;
-}
-
-.promise-card li {
-  position: relative;
-  padding: 1.05rem 0 1.05rem 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-  font-size: clamp(1rem, 1.5vw, 1.25rem);
-  font-weight: 580;
-}
-
-.promise-card li::before {
-  position: absolute;
-  left: 0;
-}
-
-.promise-card--no li::before {
-  content: "—";
-  color: rgba(255, 255, 255, 0.48);
-}
-
-.promise-card--yes li::before {
-  content: "✓";
-  color: #fff;
 }
 
 .faq-section {
@@ -1188,16 +1163,6 @@ h1 em::after {
   color: #fff;
 }
 
-.launch-label {
-  display: inline-block;
-  margin-bottom: 1.25rem;
-  color: var(--accent);
-  font-size: 0.72rem;
-  font-weight: 750;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
 .launch-panel h2 {
   max-width: 50rem;
   font-size: clamp(2.5rem, 5vw, 5.6rem);
@@ -1223,19 +1188,7 @@ h1 em::after {
   border-color: var(--accent);
   background: var(--accent);
   font-family: inherit;
-  cursor: not-allowed;
-}
-
-.launch-actions .button:disabled {
-  opacity: 0.68;
-}
-
-.launch-actions .button:disabled:hover {
-  transform: none;
-}
-
-.launch-actions .button:disabled::before {
-  display: none;
+  cursor: pointer;
 }
 
 .launch-actions > a {
@@ -1276,7 +1229,6 @@ h1 em::after {
   .problem-layout,
   .system-intro,
   .action-intro,
-  .promise-intro,
   .faq-layout,
   .author-layout {
     grid-template-columns: 1fr;
@@ -1285,22 +1237,12 @@ h1 em::after {
   .problem-layout,
   .system-intro,
   .action-intro,
-  .promise-intro,
   .faq-layout {
     gap: 3rem;
   }
 
   .outcome-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .system-track {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2.5rem 0;
-  }
-
-  .system-track::before {
-    display: none;
   }
 
   .system-result {
@@ -1353,13 +1295,26 @@ h1 em::after {
     font-size: clamp(2.2rem, 10.5vw, 3.4rem);
   }
 
-  .system-track {
-    gap: 1.5rem 0;
+  .method-loop {
+    grid-template-columns: 1fr;
   }
 
-  .system-track span {
-    width: 2.8rem;
-    box-shadow: 0 0 0 0.3rem #181817;
+  .method-loop span {
+    min-height: 7.6rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.16);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .method-loop span:last-child {
+    border-bottom: 0;
+  }
+
+  .method-loop span::after {
+    content: "↓";
+  }
+
+  .method-loop span:last-child::after {
+    content: "↺";
   }
 
   .system-result p {
@@ -1374,25 +1329,9 @@ h1 em::after {
     margin-top: 3rem;
   }
 
-  .first-move {
-    grid-template-columns: 1fr;
-  }
-
-  .first-move p {
-    font-size: clamp(2.25rem, 11vw, 3.5rem);
-  }
-
   .author-monogram {
     min-height: 19rem;
     box-shadow: 0.8rem 0.8rem 0 rgba(197, 122, 33, 0.17);
-  }
-
-  .promise-columns {
-    grid-template-columns: 1fr;
-  }
-
-  .promise-card {
-    min-height: 19rem;
   }
 
   .faq-list summary {
@@ -1419,6 +1358,22 @@ h1 em::after {
     align-items: flex-start;
     flex-direction: column;
     gap: 0.7rem;
+  }
+
+  .jobbox-tooltip {
+    right: auto;
+    left: 0;
+    width: min(15rem, calc(100vw - 3rem));
+    transform: translateY(0.45rem);
+  }
+
+  .jobbox-tooltip::after {
+    left: 1.25rem;
+  }
+
+  .jobbox-link-wrap:hover .jobbox-tooltip,
+  .jobbox-link-wrap:focus-within .jobbox-tooltip {
+    transform: translateY(0);
   }
 }
 
