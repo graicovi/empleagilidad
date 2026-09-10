@@ -300,7 +300,7 @@ function installPageMotion() {
       ".section-marker, .section-kicker, .section-heading h2, .author-copy h2, .section-lead, .author-copy > p",
     );
     const detailTargets = section.querySelectorAll(
-      ".signal-card, .editorial-statement, .method-loop span, .system-result, .outcome-grid article, .author-monogram, .author-signature, .faq-list details, .launch-panel",
+      ".signal-card, .editorial-statement, .method-loop span, .system-result, .outcome-grid article, .author-portrait, .author-signature, .faq-list details, .launch-panel",
     );
 
     gsap.set(introTargets, { opacity: 0, y: 34 });
@@ -382,23 +382,64 @@ function installPageMotion() {
   }
 
   document.querySelectorAll(".faq-list details").forEach((item) => {
+    const summary = item.querySelector("summary");
     const answer = item.querySelector("p");
-    if (!answer) return;
+    if (!summary || !answer) return;
 
-    item.addEventListener("toggle", () => {
-      if (!item.open) return;
+    summary.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (item.dataset.animating === "true") return;
 
-      gsap.fromTo(
-        answer,
-        { autoAlpha: 0, y: -10, clipPath: "inset(0 0 100% 0)" },
-        {
+      item.dataset.animating = "true";
+
+      if (!item.open) {
+        const collapsedHeight = summary.getBoundingClientRect().height;
+        item.open = true;
+        const expandedHeight = item.scrollHeight;
+
+        gsap.set(item, { height: collapsedHeight, overflow: "hidden" });
+        gsap.set(answer, { autoAlpha: 0, y: -12 });
+        gsap.to(item, {
+          height: expandedHeight,
+          duration: 0.58,
+          ease: "power3.out",
+          onComplete: () => {
+            gsap.set(item, { clearProps: "height,overflow" });
+            delete item.dataset.animating;
+          },
+        });
+        gsap.to(answer, {
           autoAlpha: 1,
           y: 0,
-          clipPath: "inset(0 0 0% 0)",
-          duration: 0.52,
+          duration: 0.44,
+          delay: 0.12,
           ease: "power3.out",
+        });
+        return;
+      }
+
+      const expandedHeight = item.getBoundingClientRect().height;
+      const collapsedHeight = summary.getBoundingClientRect().height;
+
+      gsap.set(item, { height: expandedHeight, overflow: "hidden" });
+      gsap.to(answer, {
+        autoAlpha: 0,
+        y: -9,
+        duration: 0.24,
+        ease: "power2.in",
+      });
+      gsap.to(item, {
+        height: collapsedHeight,
+        duration: 0.5,
+        delay: 0.03,
+        ease: "power2.inOut",
+        onComplete: () => {
+          item.open = false;
+          gsap.set(item, { clearProps: "height,overflow" });
+          gsap.set(answer, { clearProps: "opacity,visibility,transform" });
+          delete item.dataset.animating;
         },
-      );
+      });
     });
   });
 
