@@ -1064,6 +1064,7 @@ h1 em::after {
   max-width: 45rem;
   margin-top: 2.25rem;
   color: rgba(255, 255, 255, 0.65);
+  font-size: clamp(1rem, 1.15vw, 1.18rem);
 }
 
 .author-signature {
