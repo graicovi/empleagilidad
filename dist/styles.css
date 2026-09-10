@@ -1041,7 +1041,7 @@ h1 em::after {
   margin: 0;
   justify-self: start;
   overflow: hidden;
-  background: #07111d;
+  background: transparent;
 }
 
 .author-portrait img {
