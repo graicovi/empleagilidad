@@ -1032,29 +1032,22 @@ h1 em::after {
   display: grid;
   grid-template-columns: minmax(22rem, 0.9fr) minmax(0, 1.1fr);
   gap: clamp(3rem, 8vw, 8rem);
-  align-items: center;
+  align-items: start;
 }
 
 .author-portrait {
   position: relative;
+  width: min(100%, 26.25rem);
   margin: 0;
+  justify-self: start;
   overflow: hidden;
   background: #07111d;
-  box-shadow: 1.5rem 1.5rem 0 rgba(197, 122, 33, 0.2);
-}
-
-.author-portrait::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  box-shadow: inset 0 0 4rem rgba(0, 0, 0, 0.18);
 }
 
 .author-portrait img {
   display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 1;
   object-fit: cover;
   filter: saturate(0.92) contrast(1.04);
@@ -1263,7 +1256,8 @@ h1 em::after {
   }
 
   .author-portrait {
-    width: min(100%, 38rem);
+    width: min(100%, 32rem);
+    justify-self: center;
   }
 
   .launch-panel {
@@ -1340,10 +1334,6 @@ h1 em::after {
 
   .outcome-grid h3 {
     margin-top: 3rem;
-  }
-
-  .author-portrait {
-    box-shadow: 0.8rem 0.8rem 0 rgba(197, 122, 33, 0.17);
   }
 
   .faq-list summary {
