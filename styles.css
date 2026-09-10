@@ -174,12 +174,12 @@ h1 {
 }
 
 .title-line--two {
-  margin-top: 0.12em;
+  margin-top: 0.02em;
   padding-right: 0.08em;
 }
 
 .title-line--three {
-  margin-top: 0.035em;
+  margin-top: 0.14em;
 }
 
 h1 em {
@@ -195,10 +195,10 @@ h1 em::after {
   content: "";
   position: absolute;
   right: 0;
-  bottom: 0.01em;
+  bottom: 0.03em;
   left: 0.04em;
   z-index: -1;
-  height: 0.065em;
+  height: 0.045em;
   background: currentColor;
   transform: scaleX(0);
   transform-origin: left center;
