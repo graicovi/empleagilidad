@@ -1030,8 +1030,8 @@ h1 em::after {
 
 .author-layout {
   display: grid;
-  grid-template-columns: minmax(22rem, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(3rem, 8vw, 8rem);
+  grid-template-columns: minmax(20rem, 26.25rem) minmax(0, 1fr);
+  gap: clamp(3rem, 5vw, 5rem);
   align-items: start;
 }
 
