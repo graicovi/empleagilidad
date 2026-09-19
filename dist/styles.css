@@ -88,12 +88,17 @@ a {
   align-items: baseline;
   text-decoration: none;
   font-size: clamp(1.25rem, 1.6vw, 1.7rem);
-  font-weight: 760;
-  letter-spacing: -0.075em;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  letter-spacing: -0.065em;
 }
 
 .brand-word {
   white-space: nowrap;
+}
+
+.brand-agilidad {
+  font-style: italic;
 }
 
 .brand-i {
@@ -103,7 +108,7 @@ a {
 
 .brand-i-dot {
   position: absolute;
-  top: 0.2em;
+  top: 0.16em;
   left: 50%;
   width: 0.14em;
   height: 0.14em;
