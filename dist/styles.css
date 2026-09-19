@@ -1218,15 +1218,43 @@ h1 em::after {
   color: var(--muted);
 }
 
-.site-footer > span {
+.footer-wordmark {
   color: var(--ink);
   font-size: 1rem;
-  font-weight: 760;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
   letter-spacing: -0.065em;
+  white-space: nowrap;
 }
 
-.site-footer > span span {
+.footer-agilidad {
+  font-style: italic;
+}
+
+.footer-i {
+  position: relative;
+  display: inline-block;
+}
+
+.footer-i-dot {
+  position: absolute;
+  top: 0.16em;
+  left: 50%;
+  width: 0.14em;
+  height: 0.14em;
+  border-radius: 50%;
+  background: var(--logo-dot);
+  transform: translateX(-50%);
+}
+
+.footer-dot {
   color: var(--logo-dot);
+}
+
+.footer-wordmark small {
+  margin-left: -0.025em;
+  font-size: 0.54em;
+  letter-spacing: -0.04em;
 }
 
 .site-footer p {
